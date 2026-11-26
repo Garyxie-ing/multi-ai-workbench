@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>多 AI 工作台 · 本地版 V1</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>多 AI 工作台 · 本地版 V1</h1>
+  <p>ChatGPT / WorkBuddy / Grok / Muse / 豆包 / 百度搭子 —— 一个界面管任务、提示词和资源，零 API 成本，数据只存在本机。</p>
+  <p><span class="tag">单用户</span><span class="tag">本地 localStorage</span><span class="tag">手动复制粘贴</span><span class="tag">不上传、不追踪</span></p>
+</header>
+<main>
+  <nav class="tabs" aria-label="模块切换">
+    <button data-tab="tasks" class="active">① 任务板</button>
+    <button data-tab="launcher">② AI 启动器</button>
+    <button data-tab="prompts">③ 提示词库</button>
+    <button data-tab="resources">④ 资源中心</button>
+    <button data-tab="quota">⑤ 额度本与设置</button>
+  </nav>
+
+  <!-- 任务板 -->
+  <section id="tab-tasks" class="panel active">
+    <h2>任务板</h2>
+    <p class="muted">6 步工作流：第 1 步在这里建任务 → 第 2 步选提示词填变量 → 第 3 步去启动器打开对应 AI → 第 4 步手动粘贴、拿到产出 → 第 5 步把产出存进资源中心 → 第 6 步在额度本记一次用量。任务里的“提示词快照”方便复盘这篇产出用的哪版提示词。</p>
+    <div class="stats" id="taskStats"></div>
+    <form id="taskForm" class="grid">
+      <div><label>任务标题 *</label><input id="taskTitle" required placeholder="例如：飞猫冲牙器小红书种草文案（示例）"></div>
+      <div><label>产品</label><input id="taskProduct" placeholder="例如：飞猫冲牙器（示例）"></div>
+      <div class="full"><label>平台（可多选）</label><div class="checks" id="taskPlatforms"></div></div>
+      <div><label>状态</label><select id="taskStatus"><option value="todo">待办</option><option value="doing">进行中</option><option value="done">已完成</option></select></div>
+      <div><label>提示词快照（可选，粘贴用过的提示词标题或正文）</label><input id="taskPrompt" placeholder="例如：模板 4 · 种草文案"></div>
+      <div class="full"><label>备注</label><textarea id="taskNotes" placeholder="只写已确认的事实，不确定的写「待确认」"></textarea></div>
+      <div class="full btnrow"><button class="btn" type="submit" id="taskSubmit">新建任务</button><button class="btn secondary" type="button" id="taskCancelEdit" hidden>取消编辑</button></div>
+    </form>
+    <div class="toolbar">
+      <select id="filterStatus" aria-label="按状态筛选"><option value="">全部状态</option><option value="todo">待办</option><option value="doing">进行中</option><option value="done">已完成</option></select>
+      <select id="filterPlatform" aria-label="按平台筛选"><option value="">全部平台</option></select>
+      <input id="searchTask" placeholder="搜索标题 / 产品 / 备注">
+    </div>
+    <div id="taskList"></div>
+  </section>
+
+  <!-- AI 启动器 -->
+  <section id="tab-launcher" class="panel">
+    <h2>AI 启动器</h2>
+    <p class="muted">点卡片打开对应平台官网（新标签页）。“复制当前任务简报”会把当前选中的任务（默认第一个进行中的任务）拼成一段简报，粘贴到 AI 对话框里直接用。桌面客户端路径只能复制，不能从网页直接启动 exe——这是浏览器的安全限制，不是 bug，路径在“额度本与设置”里改。</p>
+    <div class="btnrow"><label style="flex:1;min-width:220px">当前任务：<select id="briefTask"></select></label><button class="btn" id="copyBrief">复制当前任务简报</button></div>
+    <div class="grid2" id="platformList" style="margin-top:12px"></div>
+  </section>
+
+  <!-- 提示词库 -->
+  <section id="tab-prompts" class="panel">
+    <h2>提示词库</h2>
+    <p class="muted">共 11 条：附录 B 通用模板 3 条（产品文案改写 / 配图生成 / 跨 AI 续作交接）+ D4 模板 4–9 + 跨 AI 背景交接导出/导入 2 条。点一条模板，下面会出现 {变量} 填空，填完点“复制填好后的提示词”。示例产品名仅为示例，不含编造的产品参数。</p>
+    <div class="toolbar">
+      <select id="promptCategory"><option value="">全部分类</option><option>文案</option><option>图片</option><option>表格</option><option>视频</option><option>通用</option></select>
+      <input id="searchPrompt" placeholder="搜索提示词标题 / 正文">
+    </div>
+    <div id="promptList"></div>
+    <div id="promptDetail"></div>
+  </section>
+
+  <!-- 资源中心 -->
+  <section id="tab-resources" class="panel">
+    <h2>资源中心</h2>
+    <p class="muted">产出统一存这里：哪个 AI 出的、什么类型、打什么标签、文件在本地哪里。只记“路径/位置”文字，不上传文件本身。</p>
+    <form id="resForm" class="grid">
+      <div><label>资源名称 *</label><input id="resName" required placeholder="例如：冲牙器种草文案初稿（示例）"></div>
+      <div><label>类型</label><select id="resType"><option>文案</option><option>图片</option><option>表格</option><option>PPT</option><option>代码</option><option>视频</option></select></div>
+      <div><label>来源 AI</label><select id="resSource"></select></div>
+      <div><label>标签（逗号分隔）</label><input id="resTags" placeholder="例如：飞猫, 种草, 小红书"></div>
+      <div class="full"><label>本地文件路径 / 位置备注</label><input id="resPath" placeholder="例如：D:\飞猫\文案\种草初稿.docx（只记文字，不上传文件）"></div>
+      <div class="full btnrow"><button class="btn" type="submit">加入资源中心</button></div>
+    </form>
+    <div class="toolbar">
+      <select id="filterResType"><option value="">全部类型</option><option>文案</option><option>图片</option><option>表格</option><option>PPT</option><option>代码</option><option>视频</option></select>
+      <input id="searchRes" placeholder="搜索名称 / 标签 / 来源">
+    </div>
+    <div id="resList"></div>
+  </section>
+
+  <!-- 额度本与设置 -->
+  <section id="tab-quota" class="panel">
+    <h2>额度本（手动记）</h2>
+    <p class="muted">只用现有免费订阅点数/额度，不走 API 付费。各平台免费额度以官网为准，这里只是你自己每天手动记的账本，不会自动同步。</p>
+    <div class="toolbar"><label>日期 <input type="date" id="quotaDate"></label><button class="btn secondary" id="quotaToday">回到今天</button></div>
+    <div class="quota" id="quotaGrid"></div>
+    <div class="btnrow"><button class="btn" id="quotaSave">保存今天的额度记录</button><button class="btn secondary" id="quotaClearDay">清空这一天</button></div>
+    <p class="muted" id="quotaSummary"></p>
+
+    <h3>桌面客户端路径（可编辑，待你核对）</h3>
+    <p class="muted">WorkBuddy 默认路径来自 D3 定位指南的公开资料，尚未经你本机核对，请按你电脑上的实际路径改。豆包路径请按你本机实际填写；百度搭子（DuMate）以网页版为主，未找到可信的默认安装路径，不编造。改完点保存，只存在本机。</p>
+    <form id="settingsForm" class="grid">
+      <div class="full"><label>WorkBuddy 客户端路径</label><input id="pathWorkbuddy"></div>
+      <div class="full"><label>豆包客户端路径</label><input id="pathDoubao" placeholder="例如：%LOCALAPPDATA%\Doubao\Application\Doubao.exe（请按本机实际填写）"></div>
+      <div class="full"><label>百度搭子（DuMate）</label><input value="网页版：https://dumate.baidu.com（无桌面客户端路径）" disabled></div>
+      <div class="full btnrow"><button class="btn" type="submit">保存路径设置</button><button class="btn secondary" type="button" id="copyWorkbuddyPath">复制 WorkBuddy 路径</button><button class="btn secondary" type="button" id="copyDoubaoPath">复制豆包路径</button></div>
+    </form>
+
+    <h3>数据备份</h3>
+    <p class="muted">所有数据都在浏览器 localStorage 里。换电脑、清浏览器数据会丢失，记得定期导出 JSON 备份。</p>
+    <div class="btnrow">
+      <button class="btn green" id="exportData">导出数据（JSON）</button>
+      <button class="btn secondary" id="importDataBtn">导入数据（JSON）</button>
+      <input type="file" id="importFile" accept="application/json,.json" hidden>
+      <button class="btn secondary" id="resetSample">恢复示例数据</button>
+      <button class="btn danger" id="clearAll">清空全部数据</button>
+    </div>
+  </section>
+</main>
+<footer>多 AI 工作台 V1 · 本地单页应用 · 无后端、无 API Key、无追踪 · MIT License</footer>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
