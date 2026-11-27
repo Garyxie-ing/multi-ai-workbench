@@ -2,6 +2,8 @@
 
 > Multi-AI Workbench (Local V1) — one local page to manage tasks, prompts and resources across ChatGPT, WorkBuddy, Grok, Muse, Doubao and Baidu DuMate. No backend, no API keys, no tracking. Data lives only in your browser.
 
+**在线演示：[https://garyxie-ing.github.io/multi-ai-workbench/](https://garyxie-ing.github.io/multi-ai-workbench/)**（打开即用；演示页的数据只存在你自己的浏览器里，不会同步到别人那里）
+
 每天在 6 个 AI 之间切换，不用每次从头解释背景、不用到处找提示词、不用翻聊天记录找产出。这是一个**单用户、本地 Windows 工作台 + 资源中心**：任务板、AI 启动器、提示词库、资源中心、额度本，5 个模块都在一个页面里。
 
 **零新增 API 成本**：只用你已有的免费订阅点数/额度，全程手动复制粘贴，不自动同步，不公开上传。
@@ -57,7 +59,13 @@
 
 ## 截图
 
-> 待补充：请在 Windows 上打开后截 5 张图（任务板 / 启动器 / 提示词库 / 资源中心 / 额度本），放在 `docs/screenshots/`，再更新本节。
+> 截图为本地渲染的 V1 界面（示例数据）。
+
+![任务板](docs/screenshots/01-tasks.png)
+![AI 启动器](docs/screenshots/02-launcher.png)
+![提示词库](docs/screenshots/03-prompts.png)
+![资源中心](docs/screenshots/04-resources.png)
+![额度本](docs/screenshots/05-quota.png)
 
 ## 自己改、自己加
 
