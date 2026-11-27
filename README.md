@@ -4,6 +4,8 @@
 
 **在线演示：[https://garyxie-ing.github.io/multi-ai-workbench/](https://garyxie-ing.github.io/multi-ai-workbench/)**（打开即用；演示页的数据只存在你自己的浏览器里，不会同步到别人那里）
 
+**想自己用就先点右上角 Fork：Fork 后在你自己的仓库里开 Settings → Pages → main 分支 / 根目录，几分钟后访问 `https://<你的用户名>.github.io/multi-ai-workbench/` 就是你的在线版。Fork 就是使用方式。**
+
 每天在 6 个 AI 之间切换，不用每次从头解释背景、不用到处找提示词、不用翻聊天记录找产出。这是一个**单用户、本地 Windows 工作台 + 资源中心**：任务板、AI 启动器、提示词库、资源中心、额度本，5 个模块都在一个页面里。
 
 **零新增 API 成本**：只用你已有的免费订阅点数/额度，全程手动复制粘贴，不自动同步，不公开上传。
@@ -66,6 +68,8 @@
 ![提示词库](docs/screenshots/03-prompts.png)
 ![资源中心](docs/screenshots/04-resources.png)
 ![额度本](docs/screenshots/05-quota.png)
+
+![演示动图：5 个模块轮播](docs/demo.gif)
 
 ## 自己改、自己加
 
