@@ -27,8 +27,8 @@
     <p class="muted">6 步工作流：第 1 步在这里建任务 → 第 2 步选提示词填变量 → 第 3 步去启动器打开对应 AI → 第 4 步手动粘贴、拿到产出 → 第 5 步把产出存进资源中心 → 第 6 步在额度本记一次用量。任务里的“提示词快照”方便复盘这篇产出用的哪版提示词。</p>
     <div class="stats" id="taskStats"></div>
     <form id="taskForm" class="grid">
-      <div><label>任务标题 *</label><input id="taskTitle" required placeholder="例如：飞猫冲牙器小红书种草文案（示例）"></div>
-      <div><label>产品</label><input id="taskProduct" placeholder="例如：飞猫冲牙器（示例）"></div>
+      <div><label>任务标题 *</label><input id="taskTitle" required placeholder="例如：示例产品小红书种草文案（示例）"></div>
+      <div><label>产品</label><input id="taskProduct" placeholder="例如：示例产品（示例）"></div>
       <div class="full"><label>平台（可多选）</label><div class="checks" id="taskPlatforms"></div></div>
       <div><label>状态</label><select id="taskStatus"><option value="todo">待办</option><option value="doing">进行中</option><option value="done">已完成</option></select></div>
       <div><label>提示词快照（可选，粘贴用过的提示词标题或正文）</label><input id="taskPrompt" placeholder="例如：模板 4 · 种草文案"></div>
@@ -68,11 +68,11 @@
     <h2>资源中心</h2>
     <p class="muted">产出统一存这里：哪个 AI 出的、什么类型、打什么标签、文件在本地哪里。只记“路径/位置”文字，不上传文件本身。</p>
     <form id="resForm" class="grid">
-      <div><label>资源名称 *</label><input id="resName" required placeholder="例如：冲牙器种草文案初稿（示例）"></div>
+      <div><label>资源名称 *</label><input id="resName" required placeholder="例如：示例产品种草文案初稿（示例）"></div>
       <div><label>类型</label><select id="resType"><option>文案</option><option>图片</option><option>表格</option><option>PPT</option><option>代码</option><option>视频</option></select></div>
       <div><label>来源 AI</label><select id="resSource"></select></div>
-      <div><label>标签（逗号分隔）</label><input id="resTags" placeholder="例如：飞猫, 种草, 小红书"></div>
-      <div class="full"><label>本地文件路径 / 位置备注</label><input id="resPath" placeholder="例如：D:\飞猫\文案\种草初稿.docx（只记文字，不上传文件）"></div>
+      <div><label>标签（逗号分隔）</label><input id="resTags" placeholder="例如：示例产品, 种草, 小红书"></div>
+      <div class="full"><label>本地文件路径 / 位置备注</label><input id="resPath" placeholder="例如：D:\示例产品\文案\种草初稿.docx（只记文字，不上传文件）"></div>
       <div class="full btnrow"><button class="btn" type="submit">加入资源中心</button></div>
     </form>
     <div class="toolbar">
