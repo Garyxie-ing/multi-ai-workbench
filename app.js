@@ -250,6 +250,15 @@ if (copyBtn) { var p = PROMPTS.find(function(x){ return x.id===copyBtn.dataset.c
 });
 $('promptCategory').addEventListener('change', renderPrompts);
 $('searchPrompt').addEventListener('input', renderPrompts);
+$('exportPromptPack').addEventListener('click', function(){
+var pack = {name: 'multi-ai-workbench-prompt-pack', version: '1.0.0', exportedAt: new Date().toISOString().slice(0,10), source: 'https://github.com/Garyxie-ing/multi-ai-workbench', count: PROMPTS.length, prompts: PROMPTS};
+var blob = new Blob([JSON.stringify(pack, null, 2)], {type:'application/json'});
+var a = document.createElement('a');
+a.href = URL.createObjectURL(blob); a.download = 'maw-prompt-pack-' + todayStr() + '.json';
+document.body.appendChild(a); a.click(); a.remove();
+setTimeout(function(){ URL.revokeObjectURL(a.href);}, 1000);
+toast('提示词包已导出（' + PROMPTS.length + ' 条）');
+});
 
 /* ---- Resources ---- */
 function renderResources(){
